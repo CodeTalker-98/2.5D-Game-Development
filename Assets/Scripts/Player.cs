@@ -20,7 +20,8 @@ public class Player : MonoBehaviour
     void Movement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
-        Vector3 direction = new Vector3((horizontalInput * _spd), 0, 0);
-        _controller.Move(direction * Time.deltaTime);
+        Vector3 direction = new Vector3(horizontalInput, 0, 0);
+        Vector3 velocity = direction * _spd;
+        _controller.Move(velocity * Time.deltaTime);
     }
 }
