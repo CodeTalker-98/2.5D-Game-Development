@@ -9,11 +9,19 @@ public class Player : MonoBehaviour
     [SerializeField] private float _spd;
     private bool _canDoubleJump = false;
     private float _yVelocity;
+    private int _coins = 0;
     private CharacterController _controller;
+    private UIManager _uiManager;
 
     void Start()
     {
         _controller = GetComponent<CharacterController>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
+        if (_uiManager == null)
+        {
+            Debug.LogError("The UI MANAGER is NULL");
+        }
     }
 
     void Update()
@@ -49,5 +57,11 @@ public class Player : MonoBehaviour
         velocity.y = _yVelocity;
 
         _controller.Move(velocity * Time.deltaTime);
+    }
+
+    public void AddToCoins()
+    {
+        _coins++;
+        _uiManager.UpdateCoinText(_coins);
     }
 }
