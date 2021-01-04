@@ -13,7 +13,7 @@ public class MovingPlatform : MonoBehaviour
         transform.position = _targetA.position;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (transform.position == _targetA.position)
         {
@@ -29,6 +29,24 @@ public class MovingPlatform : MonoBehaviour
         if (_switching || !_switching)
         {
             transform.position = Vector3.MoveTowards(transform.position, _nextTarget, _spd * Time.deltaTime);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            other.transform.parent = this.transform;
+        }
+    }
+
+   void OnTriggerExit(Collider other)
+    {
+        Debug.Log("Called");
+        if (other.tag == "Player")
+        {
+            Debug.Log("Player Exited");
+            other.transform.parent = null;
         }
     }
 }
