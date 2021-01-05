@@ -10,17 +10,29 @@ public class Player : MonoBehaviour
     private bool _canDoubleJump = false;
     private float _yVelocity;
     private int _coins = 0;
+    private int _lives = 3;
     private CharacterController _controller;
+    private GameManager _gameManager;
     private UIManager _uiManager;
 
     void Start()
     {
         _controller = GetComponent<CharacterController>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         if (_uiManager == null)
         {
             Debug.LogError("The UI MANAGER is NULL");
+        }
+        else
+        {
+            _uiManager.UpdateLivesText(_lives);
+        }
+
+        if (_gameManager == null)
+        {
+            Debug.LogError("The GAME MANAGER is NULL");
         }
     }
 
@@ -63,5 +75,16 @@ public class Player : MonoBehaviour
     {
         _coins++;
         _uiManager.UpdateCoinText(_coins);
+    }
+
+    public void Damage()
+    {
+        _lives--;
+        _uiManager.UpdateLivesText(_lives);
+
+        if (_lives < 1)
+        {
+            _gameManager.RestartGame();
+        }
     }
 }
