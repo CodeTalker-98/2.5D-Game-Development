@@ -42,10 +42,8 @@ public class MovingPlatform : MonoBehaviour
 
    void OnTriggerExit(Collider other)
     {
-        Debug.Log("Called");
         if (other.tag == "Player")
         {
-            Debug.Log("Player Exited");
             other.transform.parent = null;
         }
     }
